@@ -1,0 +1,31 @@
+import java.io.File
+import java.math.BigInteger
+import java.security.MessageDigest
+
+/**
+ * Reads lines from the given input txt file.
+ */
+fun readInput(name: String) = File("src/main/resources", "$name.txt")
+    .readLines()
+
+fun readChunkedLongs(name: String): List<List<Long>> {
+    val input = mutableListOf<List<Long>>()
+    var chunk = mutableListOf<Long>()
+    readInput(name).forEach { line ->
+        if (line.isNotBlank()) {
+            chunk.add(line.toLong())
+        } else {
+            input.add(chunk)
+            chunk = mutableListOf()
+        }
+    }
+    input.add(chunk)
+    return input
+}
+
+/**
+ * Converts string to md5 hash.
+ */
+fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray()))
+    .toString(16)
+    .padStart(32, '0')
