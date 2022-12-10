@@ -1,19 +1,16 @@
 fun main() {
 
     fun List<Command>.toCycles(): Map<Int, Int> {
-        var index = 1
+        var index = 0
         var x = 1
         val values = mutableMapOf<Int, Int>()
 
         this.forEach { command ->
             if (command.instruction == "noop") {
-                values[index] = x
-                index++
+                values[++index] = x
             } else {
-                values[index] = x
-                index++
-                values[index] = x
-                index++
+                values[++index] = x
+                values[++index] = x
                 x += command.value!!
             }
         }
